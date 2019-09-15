@@ -1,0 +1,47 @@
+
+image: Visual Studio 2019 preview
+
+branches:
+  only:
+  - master
+environment:
+  SONAR_TOKEN:
+    secure: 1le4hKhDyj6UuukBpuVK6a7LQT98MINrDKnDilQI8HhW5sYHWKzZnROmphFDHc2/
+  CODECOV_TOKEN:
+    secure: Aq9F+tLDv0Jh091xMqqa+bve7b6FgoXllUJ2pPRLHafcvHH9euNb478dOeuEsTLi
+  COVERALLS_REPO_TOKEN:
+    secure: HA9iKpbIqpfwP7HV8XDUjx303Ejz0J/cJexzmfsf3i5+1RkMPbqOUtELMcgx1QKa
+
+services:
+  - iis
+
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+
+skip_commits:
+  files:
+  - README.md
+
+before_build:
+   - choco install codecov  
+   - choco install xunit
+   - dotnet tool install -g coveralls.net
+   - dotnet tool install -g dotnet-sonarscanner
+   - dotnet tool install --global coverlet.console
+   - nuget restore -v quiet
+build:
+  project: BuildCustomTask.sln
+  verbosity: quiet
+
+test_script:
+  - dotnet-sonarscanner begin /k:"CustomBuildTask" /o:"rsmivb-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$SONAR_TOKEN"
+  - dotnet build .\BuildCustomTask\BuildCustomTask.csproj
+  - coverlet ./BuildCustomTaskTest/bin/Debug/BuildCustomTaskTest.dll --target "dotnet" --targetargs "test ./BuildCustomTaskTest/BuildCustomTaskTest.csproj --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover" --format opencover --output ./testResults/BuildCustomTaskTest.xml
+  - ps: codecov -f .\testResults\lotteryApp.Model.xml -t $env:CODECOV_TOKEN
+  - dotnet-sonarscanner end /d:sonar.login="$SONAR_TOKEN"
