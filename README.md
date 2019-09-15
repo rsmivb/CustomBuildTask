@@ -2,15 +2,32 @@
 
 ### Features
 
-- Repository contains Build Custom Tasks application and an application consuming the custom task, they are implementing using .NET Framework 4.8 version.
-- Generate a nuget package for the custom task;
+- Repository contains Build Custom Tasks application and an application consuming the custom task have been built as .NET Framework 4.8.
+- Generate a nuget package for the custom task - find on BuildCustomTask\BuildCustomTask.1.0.0.nupkg;
+- Add it on your project and add this code on your csproj:
+````
+<!-- Using a custom task-->
+  <UsingTask TaskName="MyCustomBuildTask" AssemblyFile="..\packages\BuildCustomTask.1.0.0\lib\net48\BuildCustomTask.dll">
+  </UsingTask>
+  <Target Name="MyTasks" AfterTargets="AfterBuild">
+    <MyCustomBuildTask Value="$(AssemblyName)" CsProjPath="$(AssemblyName).csproj" CsProjItemType="None" />
+  </Target>
+````
+|Build your application using Custom task and the output should be something like this:
+````
+MyTasks:
+  Hi, I'm running a custom build task -> ConsoleAppUsingCustomTask
+  Reading values from None
+  Item -> EvaluatedInclude: App.config, UnevaluadedInclude: App.config
+  Item -> EvaluatedInclude: packages.config, UnevaluadedInclude: packages.config
+Done Building Project "C:\workspace\CustomBuildTask\ConsoleAppUsingCustomTask\ConsoleAppUsingCustomTask.csproj" (defaul
+t targets).
+````
 
 
 ### TO DO
 
 - Build a Custom task for netcore and .Net Framework and publish as nuget package
-- Fix unit test for custom task
-
 
 ### Links
 

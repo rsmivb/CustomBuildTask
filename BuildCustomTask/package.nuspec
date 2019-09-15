@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <!--*-->
+    <id>BuildCustomTask</id>
+    <!--*-->
+    <version>1.0.0</version>
+    <title>BuildCustomTask</title>
+    <!--*-->
+    <authors>Rafael Mesquita</authors>
+    <owners>Rafael Mesquita</owners>
+    <!--
+    <licenseUrl></licenseUrl>
+    <projectUrl></projectUrl>
+    <iconUrl></iconUrl>
+-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <!--*-->
+    <description>Intial Release</description>
+    <!--*-->
+    <releaseNotes>Intial Release</releaseNotes>
+    <copyright>Copyright ©  2019</copyright>
+    <tags>
+    </tags>
+    <dependencies>
+      <!--
+      <dependency id="SampleDependency" version="1.0" />
+-->
+    </dependencies>
+  </metadata>
+</package>

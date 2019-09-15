@@ -1,5 +1,4 @@
-﻿using System;
-using BuildCustomTask;
+﻿using BuildCustomTask;
 using Microsoft.Build.Framework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
